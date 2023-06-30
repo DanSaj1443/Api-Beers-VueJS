@@ -13,15 +13,17 @@
           <v-form >
             <v-container>
               <v-row>
+
                 <!-- Field name -->
                 <v-col cols="12" md="4">
                   <v-text-field
                     variant="outlined"
-                    v-model="beer_name"
+                    v-model="name"
                     label="Name"
                     required
                   ></v-text-field>
                 </v-col>
+
                 <!--Field tagline  -->
                 <v-col cols="12" md="4">
                   <v-text-field
@@ -31,65 +33,111 @@
                     required
                   ></v-text-field>
                 </v-col>
+
                  <!--Field Date -->
                  <v-col cols="12" md="4">
                   <v-text-field
                     variant="outlined"
                     v-model="first_brewed"
-                    label="First brewed"
+                    label="MM/YYYY"
                     required
                   ></v-text-field>
                 </v-col>               
               </v-row>
 
               <v-row>
+                <!-- Field food_pairing -->
+                <v-col cols="12" md="4">
+                  <v-text-field
+                    variant="outlined"
+                    v-model="food_pairing"
+                    label="food_pairingTrois"
+                    required
+                  ></v-text-field>
+                </v-col>
+
+                <!--Field food_pairingDeux  -->
+                <v-col cols="12" md="4">
+                  <v-text-field
+                    variant="outlined"
+                    v-model="food_pairingDeux"
+                    label="food_pairingTrois"
+                    required
+                  ></v-text-field>
+                </v-col>
+
+                 <!--Field food_pairingTrois -->
+                 <v-col cols="12" md="4">
+                  <v-text-field
+                    variant="outlined"
+                    v-model="food_pairingTrois"
+                    label="food_pairingTrois"
+                    required
+                  ></v-text-field>
+                </v-col>               
+              </v-row>
+
+              <v-row>
+                <!-- Field  contributed_by-->
                 <v-col cols="12" md="6">
                   <v-text-field
                     variant="outlined"
-                    v-model="contributed"
+                    v-model="contributed_by"
                     label="Contributed by"
                     required
                   ></v-text-field>
                 </v-col>
-               
+
+               <!--Fiels image_url  -->
                 <v-col cols="12" md="6">
                   <v-text-field
                     variant="outlined"
-                    v-model="img_url"        
+                    v-model="image_url"        
                     label="img url"
                     required
                   ></v-text-field>
-                </v-col>
-               
+                </v-col>               
               </v-row>
+
               <v-row>
+                <!-- Fiels description -->
                 <v-col cols="12" md="6">
                   <v-textarea 
                     variant="outlined"
-                    v-model="description_beer"        
+                    v-model="description"        
                     label="Description"
                     required
                   ></v-textarea >
                 </v-col>
+
+                <!--Field brewers_tips  -->
                 <v-col cols="12" md="6">
                   <v-textarea
                     variant="outlined"
-                    v-model="tips"
+                    v-model="brewers_tips"
                     label="Brewers tips"
                     required
                   ></v-textarea >
                 </v-col>
               </v-row>
+
             </v-container>
           </v-form>
         </v-card-text>
+        
         <v-card-actions>
-          <v-btn color="dark" block @click="dialog = false, postBeer()">Close</v-btn>
+          <v-btn color="dark" block @click="dialog = false, createBeerMethode()">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+    
+
+
   </v-layout>
+
+
 </template>
+
 <script>
 import AxiosBeers from "../services/axios"
 
@@ -99,32 +147,26 @@ export default {
      
       show: false,
       dialog: false,
-      beer_name:'',
+      name:'',
       tagline:'',
       first_brewed:'',
-      contributed:'',
-      img_url:'',
-      description_beer:'',
-      tips:'',
-      beer_to_post:{}
+      food_pairing:'',
+      food_pairingDeux:'',
+      food_pairingTrois:'',
+      contributed_by:'',
+      image_url:'',
+      description:'',
+      brewers_tips:'',
+      
     }
   },
   methods: {
+    
    async createBeerMethode(){
-      this.beer_to_post = {
-        name: this.beer_name,
-        tagline: this.tagline,
-        first_brewed: this.first_brewed,
-        contributed: this.contributed,
-        img_url: this.img_url,
-        description: this.description_beer,
-        tips: this.tips,
-      }
-      console.log(this.beer_to_post)
-    },
-    async funct(){
-      let createB = await AxiosBeers.createBeers()
-    }
-  },
+    console.log('[Component][FormAddBeer][createBeerMethode] Create beers')
+    await AxiosBeers.createBeers(this.name, this.tagline, this.first_brewed, this.contributed_by, this.food_pairing, this.food_pairingDeux, this.food_pairingTrois, this.image_url, this.description, this.brewers_tips, ) 
+    location.reload()
+  }
+  }
 };
 </script>

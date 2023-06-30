@@ -1,16 +1,28 @@
 <template>
   <v-container>
-    <v-row class="text-center py-14">
+    <v-row 
+      class="text-center py-14">
       <v-col>
-        <v-icon size="x-large" class="mdi mdi-instagram py-15"></v-icon>
+        <v-icon 
+          size="x-large" 
+          class="mdi mdi-instagram py-15">
+        </v-icon>
       </v-col>
 
       <v-col>
-        <v-icon size="x-large" class="mdi mdi-facebook py-15"></v-icon>
+        <v-icon 
+          size="x-large" 
+          class="mdi mdi-facebook py-15">
+        </v-icon>
       </v-col>
+
       <v-col>
-        <v-icon size="x-large" class="mdi mdi-home py-15"></v-icon>
+        <v-icon 
+          size="x-large" 
+          class="mdi mdi-home py-15">
+        </v-icon>
       </v-col>
+
     </v-row>
     <v-row>
       <v-col>
@@ -22,13 +34,10 @@
         </p>
       </v-col>
     </v-row>
-    <v-row class="py-15">
-        <form-contact 
-      
-        
-        />
 
-      
+    <v-row 
+      class="py-15">
+        <form-contact />      
     </v-row>
   </v-container>
 </template>
@@ -38,18 +47,6 @@ import FormContact from "../components/FormContact.vue";
 
 export default {
     components: { FormContact },
-    data: () => {
-        return {
-            // first:'',
-            // last:'',
-            // email:'',
-            // message:'',
-           
-        }
-    },
-    methods: {
-    
-    }
 };
 </script>
-<style></style>
+

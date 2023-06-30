@@ -1,5 +1,5 @@
-<template lang="">
-    <div class="containerDaniel">
+<template>
+    <div class="text-center h-screen">
         <h1>OOOOPs!</h1>
         <p>This page does not exist</p>
     </div>
@@ -9,8 +9,3 @@ export default {
     
 }
 </script>
-<style>
-.containerDaniel{
-    text-align: center;
-}
-</style>

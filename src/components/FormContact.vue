@@ -105,15 +105,12 @@ export default {
       messageRules: [
         value => {
           if(value?.length <= 50) return true
-
           return 'Name must be less than 50 characters.'
         }
       ],
-      info: {},
-      
+      info: {},      
     };
   },
-
   methods: {
     sendMessage() {
       this.info = {
@@ -127,4 +124,4 @@ export default {
   },
 };
 </script>
-<style></style>
+
