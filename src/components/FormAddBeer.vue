@@ -20,6 +20,7 @@
                     variant="outlined"
                     v-model="name"
                     label="Name"
+                    :rules="fieldRulesGeneral"
                     required
                   ></v-text-field>
                 </v-col>
@@ -157,6 +158,14 @@ export default {
       image_url:'',
       description:'',
       brewers_tips:'',
+
+      fieldRulesGeneral: [
+        value => {
+          if(value) return true
+            return 'This field is required'
+          },
+       
+      ]
       
     }
   },

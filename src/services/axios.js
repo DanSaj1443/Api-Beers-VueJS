@@ -6,16 +6,16 @@ const URLBEERS = "http://localhost:8808/beers"
 
 class AxiosBeers {
 
-    static async getBeers() {       
-        try {
-          const promisBeerList = await axios.get(URLBEERS);
-          let listBeers = promisBeerList.data;
-          console.log(listBeers.data)
-          return listBeers.data
-        } catch (error) {
-          console.error(error);
-        }
-      }
+    // static async getBeers() {       
+    //     try {
+    //       const promisBeerList = await axios.get(URLBEERS);
+    //       let listBeers = promisBeerList.data;
+    //       console.log(listBeers.data)
+    //       return listBeers.data
+    //     } catch (error) {
+    //       console.error(error);
+    //     }
+    //   }
      
     static async createBeers(name,tagline,first_brewed,image_url,food_pairing,food_pairingDeux,food_pairingTrois,contributed_by,brewers_tips,description){
       try {

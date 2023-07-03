@@ -12,9 +12,11 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 
+import pinia from './libs/pinia.js'
+
 /* add icons to the library */
 library.add(faUserSecret)
 
-createApp(App).use(router).use(vuetify).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
+createApp(App).use(router).use(vuetify).use(pinia).component('font-awesome-icon', FontAwesomeIcon).mount('#app')
 
 // .provide('axios', app.config.globalProperties.axios)

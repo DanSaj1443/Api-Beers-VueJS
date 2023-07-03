@@ -8,7 +8,7 @@
       <v-row class="py-5">
         
         <v-col 
-          v-for="beer in beers" 
+          v-for="beer in beersStore.getAllBeers" 
           :key="beer.name"
           xs="12" 
           sm="6" 
@@ -37,13 +37,16 @@
 <script>
 import AppLoader from "../components/Apploader.vue";
 import CardComponent from "../components/CardComponent.vue";
-import AxiosBeers from "../services/axios"
+// import AxiosBeers from "../services/axios"
 import FormAddBeer from '../components/FormAddBeer.vue'
+import { mapStores } from "pinia";
+import {beersStore} from '../store/store.js'
+
 export default {
   components: { CardComponent, AppLoader, FormAddBeer },
   data: () => {
     return {
-      beers: [],
+      // beers: [],
       error: null
     };
   },
@@ -55,9 +58,14 @@ export default {
         console.error(error);
       }
     } 
-  }, 
+  },
+  computed: {
+    // note we are not passing an array, just one store after the other
+    // each store will be accessible as its id + 'Store'
+    ...mapStores(beersStore)
+  },
   async mounted() {
-    await this.getListBeers();
+    await this.beersStore.getBeers();
   },
 };
 </script>
