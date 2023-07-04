@@ -140,12 +140,15 @@
 </template>
 
 <script>
-import AxiosBeers from "../services/axios"
+// import AxiosBeers from "../services/axios"
+import { mapStores } from "pinia";
+import {beersStore} from '../store/store.js'
+import { useDate } from 'vuetify/labs/date'
 
 export default {
   data: () => {
     return {
-     
+      date: useDate(),
       show: false,
       dialog: false,
       name:'',
@@ -169,12 +172,16 @@ export default {
       
     }
   },
+  computed: {
+    // note we are not passing an array, just one store after the other
+    // each store will be accessible as its id + 'Store'
+    ...mapStores(beersStore)},
   methods: {
     
    async createBeerMethode(){
     console.log('[Component][FormAddBeer][createBeerMethode] Create beers')
-    await AxiosBeers.createBeers(this.name, this.tagline, this.first_brewed, this.contributed_by, this.food_pairing, this.food_pairingDeux, this.food_pairingTrois, this.image_url, this.description, this.brewers_tips, ) 
-    location.reload()
+    await this.beersStore.createBeers(this.name, this.tagline, this.first_brewed, this.contributed_by, this.food_pairing, this.food_pairingDeux, this.food_pairingTrois, this.image_url, this.description, this.brewers_tips, ) 
+    
   }
   }
 };

@@ -6,6 +6,8 @@ import {createVuetify} from "vuetify";
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
+import { VuetifyDateAdapter } from 'vuetify/labs/date/adapters/vuetify'
+
 const vuetify = createVuetify({
   components,
   directives,
@@ -15,6 +17,9 @@ const vuetify = createVuetify({
     sets: {
       fa,
     },
+  },
+  date: {
+    adapter: VuetifyDateAdapter,
   },
 })
 

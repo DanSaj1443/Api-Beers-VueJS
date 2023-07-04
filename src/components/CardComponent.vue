@@ -1,8 +1,9 @@
 <template>
-  <v-layout  
+   <v-layout  
     class="my-5 py-5">
+        
     <v-card 
-      :id="id"
+      
       class="mx-auto my-5 rounded-lg text-center" 
       max-width="344" 
       elevation="10">
@@ -63,18 +64,23 @@
         </div>
         
         <v-spacer></v-spacer>
-        <v-item-group>
-          <v-btn icon="mdi mdi-delete" size="x-large" @click="select($event)"></v-btn>
+        <v-item-group
+        :id="id"
+        >
+          <v-btn icon="mdi mdi-delete" size="x-large" @click="select()"></v-btn>
         </v-item-group>
       </v-card-actions>
 
     </v-card>
-  </v-layout>
+ 
+</v-layout>
 </template>
 
 <script>
 import "@mdi/font/css/materialdesignicons.css";
 import AxiosBeers from "../services/axios";
+import { mapStores } from "pinia";
+import {beersStore} from '../store/store.js'
 export default {
   props: {
     id: {
@@ -106,12 +112,16 @@ export default {
   data: () => ({
     dialog: false,
   }),
+  computed: {
+    // note we are not passing an array, just one store after the other
+    // each store will be accessible as its id + 'Store'
+    ...mapStores(beersStore)},
   methods: {
 
-  async select(event) {            
-      console.log('id', event.target.parentElement.parentElement.parentElement.parentElement.id); 
-    await AxiosBeers.deleteBeer(this.id);
-    location.reload();
+  async select() {            
+    console.log(this.id); 
+    this.beersStore.deleteBeer(this.id)
+   
     }
   }
 };
