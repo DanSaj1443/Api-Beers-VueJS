@@ -7,10 +7,12 @@ const beersStore = defineStore('beers',{
     state: () => {
     return {
         beerList: [], //list to store beer
+        responseAdd:{}
     }
 },
 getters: {
-    getAllBeers: (state) => state.beerList
+    getAllBeers: (state) => state.beerList,
+    getResponseAddBeer: (state) => state.responseAdd
 },
 actions: {
     async getBeers() {       
@@ -23,24 +25,25 @@ actions: {
         }
       },
 
-      async createBeers(name,tagline,first_brewed,image_url,food_pairing,food_pairingDeux,food_pairingTrois,contributed_by,brewers_tips,description){
+      async createBeers(beer){
         try {
           console.log('[STORE][berrsStore][createBeers] Post beer')
             const response = await axios.post(URLBEERS, {
-                "name": name,
-                "tagline": tagline,
-                "first_brewed": first_brewed,
-                "image_url": image_url,
-                "contributed_by": contributed_by,
+                "name": beer.name,
+                "tagline": beer.tagline,
+                "first_brewed": beer.first_brewed,
+                "image_url": beer.image_url,
+                "contributed_by": beer.contributed_by,
                 "food_pairing": [
-                    food_pairing,
-                    food_pairingDeux,
-                    food_pairingTrois
+                  beer.food_pairing,
+                  beer.food_pairingDeux,
+                  beer.food_pairingTrois
                 ],
-                "brewers_tips": brewers_tips,
-                "description": description
+                "brewers_tips": beer.brewers_tips,
+                "description": beer.description
             });
            this.beerList.push(response.data)
+           this.responseAdd = response
         } catch (error) {
             console.error(error);
       }

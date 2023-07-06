@@ -10,7 +10,8 @@
         <v-img 
         class="py-5" 
         :src="srcImage" 
-        max-height="300" 
+        max-height="300"
+        min-height="300"
         width="300px">
         
         <template v-slot:placeholder>
@@ -23,7 +24,7 @@
         </template>
         </v-img>
 
-      <v-card-title> {{ titleBeer, id }} </v-card-title>
+      <v-card-title> {{ titleBeer }} </v-card-title>
 
       <v-card-subtitle> First brewed: {{ first_brewed }} </v-card-subtitle>
 
@@ -78,9 +79,8 @@
 
 <script>
 import "@mdi/font/css/materialdesignicons.css";
-import AxiosBeers from "../services/axios";
 import { mapStores } from "pinia";
-import {beersStore} from '../store/store.js'
+import { beersStore } from '../store/store.js'
 export default {
   props: {
     id: {

@@ -2,7 +2,7 @@
   <v-layout class="mx-auto my-5 rounded-lg justify-center">
     <v-dialog v-model="dialog" max-width="800px">
       <template v-slot:activator="{ props }">
-        <v-btn color="#5865f2" flat v-bind="props">Add new beer</v-btn>
+        <v-btn class="ms-11" color="info" flat v-bind="props">Add new beer</v-btn>
       </template>
       <!-- Modal Add beer -->
       <v-card class="text-center rounded-xl">
@@ -18,7 +18,7 @@
                 <v-col cols="12" md="4">
                   <v-text-field
                     variant="outlined"
-                    v-model="name"
+                    v-model="beer.name"
                     label="Name"
                     :rules="fieldRulesGeneral"
                     required
@@ -29,9 +29,10 @@
                 <v-col cols="12" md="4">
                   <v-text-field
                     variant="outlined"
-                    v-model="tagline"
+                    v-model="beer.tagline"
                     label="Tagline"
                     required
+                    :rules="fieldRulesGeneral"
                   ></v-text-field>
                 </v-col>
 
@@ -39,9 +40,10 @@
                  <v-col cols="12" md="4">
                   <v-text-field
                     variant="outlined"
-                    v-model="first_brewed"
+                    v-model="beer.first_brewed"
                     label="MM/YYYY"
                     required
+                    :rules="fieldRulesGeneral"
                   ></v-text-field>
                 </v-col>               
               </v-row>
@@ -51,9 +53,10 @@
                 <v-col cols="12" md="4">
                   <v-text-field
                     variant="outlined"
-                    v-model="food_pairing"
+                    v-model="beer.food_pairing"
                     label="food_pairingTrois"
                     required
+                    :rules="fieldRulesGeneral"
                   ></v-text-field>
                 </v-col>
 
@@ -61,9 +64,10 @@
                 <v-col cols="12" md="4">
                   <v-text-field
                     variant="outlined"
-                    v-model="food_pairingDeux"
+                    v-model="beer.food_pairingDeux"
                     label="food_pairingTrois"
                     required
+                    :rules="fieldRulesGeneral"
                   ></v-text-field>
                 </v-col>
 
@@ -71,9 +75,10 @@
                  <v-col cols="12" md="4">
                   <v-text-field
                     variant="outlined"
-                    v-model="food_pairingTrois"
+                    v-model="beer.food_pairingTrois"
                     label="food_pairingTrois"
                     required
+                    :rules="fieldRulesGeneral"
                   ></v-text-field>
                 </v-col>               
               </v-row>
@@ -83,9 +88,10 @@
                 <v-col cols="12" md="6">
                   <v-text-field
                     variant="outlined"
-                    v-model="contributed_by"
+                    v-model="beer.contributed_by"
                     label="Contributed by"
                     required
+                    :rules="fieldRulesGeneral"
                   ></v-text-field>
                 </v-col>
 
@@ -93,9 +99,10 @@
                 <v-col cols="12" md="6">
                   <v-text-field
                     variant="outlined"
-                    v-model="image_url"        
+                    v-model="beer.image_url"        
                     label="img url"
                     required
+                    :rules="fieldRulesGeneral"
                   ></v-text-field>
                 </v-col>               
               </v-row>
@@ -105,9 +112,10 @@
                 <v-col cols="12" md="6">
                   <v-textarea 
                     variant="outlined"
-                    v-model="description"        
+                    v-model="beer.description"        
                     label="Description"
                     required
+                    :rules="fieldRulesGeneral"
                   ></v-textarea >
                 </v-col>
 
@@ -115,25 +123,42 @@
                 <v-col cols="12" md="6">
                   <v-textarea
                     variant="outlined"
-                    v-model="brewers_tips"
+                    v-model="beer.brewers_tips"
                     label="Brewers tips"
                     required
+                    :rules="fieldRulesGeneral"
                   ></v-textarea >
                 </v-col>
               </v-row>
-
             </v-container>
           </v-form>
+          <v-alert
+            v-if="message"
+            type="success"
+            title="Bravo"
+            text="Youur beer was added successfully"
+          ></v-alert> 
+          <v-alert
+            v-if="wrongMessage"
+            type="error"
+            title="Opps"
+            text="something went wrong"
+          ></v-alert> 
+
         </v-card-text>
         
         <v-card-actions>
-          <v-btn color="dark" block @click="dialog = false, createBeerMethode()">Close</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn 
+            class="me-15 mb-12 px-4"
+            color="success" 
+            variant="tonal"
+            @click="dialog=true, createBeerMethode()">
+            Add beer
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    
-
-
   </v-layout>
 
 
@@ -146,12 +171,18 @@ import {beersStore} from '../store/store.js'
 import { useDate } from 'vuetify/labs/date'
 
 export default {
+  components: {
+   
+  },
   data: () => {
     return {
+      wrongMessage: false,
+      message: false,
       date: useDate(),
       show: false,
       dialog: false,
-      name:'',
+      beer: 
+      {name:'',
       tagline:'',
       first_brewed:'',
       food_pairing:'',
@@ -160,16 +191,13 @@ export default {
       contributed_by:'',
       image_url:'',
       description:'',
-      brewers_tips:'',
-
+      brewers_tips:''},
       fieldRulesGeneral: [
         value => {
           if(value) return true
             return 'This field is required'
           },
-       
       ]
-      
     }
   },
   computed: {
@@ -178,11 +206,17 @@ export default {
     ...mapStores(beersStore)},
   methods: {
     
-   async createBeerMethode(){
+   async createBeerMethode(e){
     console.log('[Component][FormAddBeer][createBeerMethode] Create beers')
-    await this.beersStore.createBeers(this.name, this.tagline, this.first_brewed, this.contributed_by, this.food_pairing, this.food_pairingDeux, this.food_pairingTrois, this.image_url, this.description, this.brewers_tips, ) 
-    
-  }
+    await this.beersStore.createBeers(this.beer) 
+    if(this.beersStore.getResponseAddBeer.status === 200) {
+      this.message = true
+      setTimeout(()=>{this.dialog = false;}, 2000)    
+    } else {
+        this.wrongMessage = true
+        setTimeout(()=>{this.wrongMessage = false;}, 2000)    
+      }
+   }
   }
 };
 </script>

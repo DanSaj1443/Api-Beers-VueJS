@@ -7,7 +7,7 @@ export default defineConfig({
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: (tag) => ['v-list-item-icon', 'v-list-item-group'].includes(tag),
+          isCustomElement: (tag) => ['v-skeleton-loader', 'v-list-item-icon', 'v-list-item-group'].includes(tag),
         }
       }
     })

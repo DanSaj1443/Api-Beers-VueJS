@@ -1,27 +1,39 @@
 <template>
-
+  
   <v-container 
-    fluid class="bg-yellow-lighten-1 scroll-y">
-      <v-row id="scroll-target">        
-        <form-add-beer/>
-      </v-row>     
-      <v-row class="py-5">
-        <v-col 
+  fluid class="bg-yellow-lighten-1 scroll-y">
+  
+  <v-row id="scroll-target">        
+    <form-add-beer/>
+  </v-row>
+  <suspense>
+  <template #default>
+  <v-row class="py-5">
+      <v-col 
           v-for="beer in beersStore.getAllBeers" 
           :key="beer.name"
           xs="12" 
           sm="6" 
           md="4" 
-          lg="3">          
+          lg="3">
             <card-component
               :id="beer.id"
               :srcImage="beer.image_url"
               :titleBeer="beer.name"
               :first_brewed="beer.first_brewed"
               :description="beer.description"
-            />          
-        </v-col>
-      </v-row>
+            /> 
+          </v-col>
+        </v-row>
+        </template>
+        <template #fallback>
+          <v-row>
+            <v-sheet>
+              <skeleton/>
+            </v-sheet>
+          </v-row>
+        </template>
+      </suspense>
       <v-row>
         <v-spacer></v-spacer>
         <v-btn 
@@ -37,13 +49,15 @@
 </template>
 
 <script>
+import * as labsComponents from 'vuetify/labs/components'
+import Skeleton from '../components/Skeleton.vue'
 import CardComponent from "../components/CardComponent.vue";
 import FormAddBeer from '../components/FormAddBeer.vue'
 import { mapStores } from "pinia";
 import {beersStore} from '../store/store.js'
 
 export default {
-  components: { CardComponent, FormAddBeer },
+  components: { Skeleton ,CardComponent, FormAddBeer, labsComponents },
   data: () => {
     return {
      
