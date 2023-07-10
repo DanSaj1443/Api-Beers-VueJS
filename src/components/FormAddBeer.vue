@@ -211,10 +211,10 @@ export default {
     await this.beersStore.createBeers(this.beer) 
     if(this.beersStore.getResponseAddBeer.status === 200) {
       this.message = true
-      setTimeout(()=>{this.dialog = false;}, 2000)    
+      setTimeout(()=>{this.dialog = false;}, 1000)    
     } else {
         this.wrongMessage = true
-        setTimeout(()=>{this.wrongMessage = false;}, 2000)    
+        setTimeout(()=>{this.wrongMessage = false;}, 1000)    
       }
    }
   }
